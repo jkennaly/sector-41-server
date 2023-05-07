@@ -1,0 +1,22 @@
+{
+  "name": "sector-41-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jkennaly/sector-41-server.git"
+  },
+  "author": "jason@0441.design",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jkennaly/sector-41-server/issues"
+  },
+  "homepage": "https://github.com/jkennaly/sector-41-server#readme",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
