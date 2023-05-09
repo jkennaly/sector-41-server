@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+	<meta name="apple-mobile-web-app-title" content="FestiGram" />
+	<meta name="theme-color" content="#003300" />
+	<!-- ****** faviconit.com favicons ****** -->
+	<link rel="shortcut icon" href="/fav/favicon.ico" />
+	<link rel="icon" sizes="16x16 32x32 64x64" href="/fav/favicon.ico" />
+	<link rel="icon" type="image/png" sizes="196x196" href="/fav/favicon-192.png" />
+	<link rel="icon" type="image/png" sizes="160x160" href="/fav/favicon-160.png" />
+	<link rel="icon" type="image/png" sizes="96x96" href="/fav/favicon-96.png" />
+	<link rel="icon" type="image/png" sizes="64x64" href="/fav/favicon-64.png" />
+	<link rel="icon" type="image/png" sizes="32x32" href="/fav/favicon-32.png" />
+	<link rel="icon" type="image/png" sizes="16x16" href="/fav/favicon-16.png" />
+	<link rel="apple-touch-icon" href="/fav/favicon-57.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="/fav/favicon-114.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="/fav/favicon-72.png" />
+	<link rel="apple-touch-icon" sizes="144x144" href="/fav/favicon-144.png" />
+	<link rel="apple-touch-icon" sizes="60x60" href="/fav/favicon-60.png" />
+	<link rel="apple-touch-icon" sizes="120x120" href="/fav/favicon-120.png" />
+	<link rel="apple-touch-icon" sizes="76x76" href="/fav/favicon-76.png" />
+	<link rel="apple-touch-icon" sizes="152x152" href="/fav/favicon-152.png" />
+	<link rel="apple-touch-icon" sizes="180x180" href="/fav/favicon-180.png" />
+	<meta name="msapplication-TileColor" content="#FFFFFF" />
+	<meta name="msapplication-TileImage" content="/fav/favicon-144.png" />
+	<meta name="msapplication-config" content="/fav/browserconfig.xml" />
+
+	<link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+
+	<link rel="stylesheet" href="/views.css" />
+	<title>FestiGram</title>
+	<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.8.2/dist/alpine.min.js" defer></script>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-HERSZF6YBR">
+	</script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'G-HERSZF6YBR');
+	</script>
+</head>
+
+<body>
+	<div x-data="{
+			isFestivals: /site\/festivals\/?($|\?)/.test(window.location.href),
+			isArtists: /site\/artists\/?($|\?)/.test(window.location.href),
+			isLanding: /site\/?$/.test(window.location.href),
+			isSupport: /site\/support\/?($|\?)/.test(window.location.href),
+			isOpen: false
+		}">
+		<nav class="bg-gray-800">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="flex items-center justify-between h-16">
+					<div class="flex items-center">
+						<div class="flex-shrink-0">
+							<img class="h-8 w-8" src="/img/insignia lighter 512x512.png" alt="App" />
+						</div>
+						<div class="hidden md:block">
+							<div class="ml-10 flex items-baseline space-x-4">
+								<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+
+								<a :class="{'bg-gray-900 text-white' : isLanding, 'text-gray-300 hover:bg-gray-700 hover:text-white': !isLanding}"
+									href="/site"
+									class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+								<a href="https://festigram.app"
+									class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">App</a>
+
+								<a :class="{'bg-gray-900 text-white' : isFestivals, 'text-gray-300 hover:bg-gray-700 hover:text-white': !isFestivals}"
+									href="/site/festivals?page=1"
+									class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Festivals</a>
+
+								<a :class="{'bg-gray-900 text-white' : isArtists, 'text-gray-300 hover:bg-gray-700 hover:text-white': !isArtists}"
+									href="/site/artists?page=1"
+									class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Artists</a>
+
+								<a :class="{'bg-gray-900 text-white' : isSupport, 'text-gray-300 hover:bg-gray-700 hover:text-white': !isSupport}"
+									href="/site/support"
+									class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Support</a>
+							</div>
+						</div>
+
+
+						<div class="-mr-2 flex md:hidden">
+							<!-- Mobile menu button -->
+							<button @click="isOpen=!isOpen" type="button"
+								class="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+								aria-controls="mobile-menu" aria-expanded="false">
+								<span class="sr-only">Open main menu</span>
+								<!--
+              Heroicon name: outline/menu
+
+              Menu open: "hidden", Menu closed: "block"
+            -->
+								<svg :class="{'hidden': isOpen, 'block': !isOpen}" class="block h-6 w-6"
+									xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+									stroke="currentColor" aria-hidden="true">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+										d="M4 6h16M4 12h16M4 18h16" />
+								</svg>
+								<!--
+              Heroicon name: outline/x
+
+              Menu open: "block", Menu closed: "hidden"
+            -->
+								<svg :class="{'block': isOpen, 'hidden': !isOpen}" class="hidden h-6 w-6"
+									xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+									stroke="currentColor" aria-hidden="true">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+										d="M6 18L18 6M6 6l12 12" />
+								</svg>
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<!-- Mobile menu, show/hide based on menu state. -->
+				<div x-show="isOpen" class="md:hidden" id="mobile-menu">
+					<div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+						<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+
+						<a :class="{'bg-gray-900 text-white' : isLanding, 'text-gray-300 hover:bg-gray-700 hover:text-white': !isLanding}"
+							href="/site"
+							class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+						<a href="/"
+							class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">App</a>
+
+						<a :class="{'bg-gray-900 text-white' : isFestivals, 'text-gray-300 hover:bg-gray-700 hover:text-white': !isFestivals}"
+							href="/site/festivals?page=1"
+							class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Festivals</a>
+
+						<a :class="{'bg-gray-900 text-white' : isArtists, 'text-gray-300 hover:bg-gray-700 hover:text-white': !isArtists}"
+							href="/site/artists?page=1"
+							class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Artists</a>
+
+						<a :class="{'bg-gray-900 text-white' : isSupport, 'text-gray-300 hover:bg-gray-700 hover:text-white': !isSupport}"
+							href="/site/support"
+							class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Support</a>
+					</div>
+
+
+				</div>
+		</nav>
+
+		<header class="bg-white shadow-sm">
+		</header>
+		<div id="pagination"></div>
+		<main>
+			<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+				<div id="component"></div>
+			</div>
+		</main>
+	</div>
+</body>
+
+</html>

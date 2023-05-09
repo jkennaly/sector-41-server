@@ -1,5 +1,5 @@
 // bin/common/cachedGet.js
-import moment from 'moment-timezone/builds/moment-timezone-with-data-2012-2022.min'
+import moment from 'moment-timezone/builds/moment-timezone-with-data-2012-2022.min.js'
 import _ from 'lodash'
 import axios from 'axios'
 

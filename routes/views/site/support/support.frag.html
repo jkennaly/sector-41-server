@@ -1,0 +1,81 @@
+<div class="md:flex md:items-center md:justify-between">
+  <div class="flex-1 min-w-0">
+    <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
+       FestiGram Support
+    </h2>
+  </div>
+  <div class="mt-4 flex md:mt-0 md:ml-4">
+  	<a href="mailto:support@festigram.app" target="_blank">
+	    <button type="button" class="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+	      Email Support
+	    </button>
+	</a>
+  </div>
+	  </div>
+  <div
+		x-data="{
+			tabShown: 'request'
+		}"
+	>
+	  <div class="sm:hidden">
+	    <label for="tabs">What do you need help with?</label>
+	    <select 
+	    	id="tabs" 
+	    	name="tabs" 
+	    	class="block w-full focus:ring-indigo-500 focus:border-indigo-500 border-gray-300 rounded-md"
+	    >
+	      <option
+	      	:selected="tabShown==='request'"
+	      	@click="tabShown='request"
+	      	value="request"
+	      >Festival Request</option>
+
+	      <option
+	      	:selected="tabShown==='problem'"
+	      	@click="tabShown='problem"
+	      	value="problem"
+	      >Problem With App</option>
+
+	      <option 
+	      	:selected="tabShown==='other'"
+	      	@click="tabShown='other"
+	      	value="other"
+	      >Something Else</option>
+	    </select>
+	  </div>
+	  <div class="hidden sm:block">
+	    <nav class="flex space-x-4" aria-label="Tabs">
+	      <!-- Current: "bg-indigo-100 text-indigo-700", Default: "text-gray-500 hover:text-gray-700" -->
+	      <span 
+	      	@click="tabShown='request'"
+	      :class="{'bg-indigo-100 text-indigo-700' : tabShown==='request', 'text-gray-500 hover:text-gray-700': tabShown!=='request'}"
+	      	class="px-3 py-2 font-medium text-sm rounded-md cursor-pointer"
+	      >
+	        Festival Request
+	      </span>
+
+	      <span 
+	      	@click="tabShown='problem'"
+	      :class="{'bg-indigo-100 text-indigo-700' : tabShown==='problem', 'text-gray-500 hover:text-gray-700': tabShown!=='problem'}"
+	      	class="px-3 py-2 font-medium text-sm rounded-md cursor-pointer"
+	      >
+	        Problem With App
+	      </span>
+
+	      <span 
+	      	@click="tabShown='other'"
+	      :class="{'bg-indigo-100 text-indigo-700' : tabShown==='other', 'text-gray-500 hover:text-gray-700': tabShown!=='other'}"
+	      	class="px-3 py-2 font-medium text-sm rounded-md cursor-pointer"
+	      >
+	        Something Else
+	      </span>
+	    </nav>
+			<main>
+				<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+					<div x-show="tabShown==='request'"><div id="request"></div></div>
+					<div x-show="tabShown==='problem'"><div id="problem"></div></div>
+					<div x-show="tabShown==='other'"><div id="other"></div></div>
+				</div>
+			</main>
+  </div>
+</div>
