@@ -41,3 +41,7 @@ Thumbs.db
 # Debug files
 *.swp
 *~
+
+#security
+*.key
+*.pem
