@@ -36,10 +36,10 @@ sequelize.sync()
     app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
   
-  app.use((req, res, next) => {
-    console.log('Request received!');
-    next();
-  })
+  // app.use((req, res, next) => {
+  //   console.log('Request received!');
+  //   next();
+  // })
 
   
   app.use(createConnection());

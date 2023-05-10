@@ -1,6 +1,6 @@
 // server/middleware/auth-check.js
 
-import jwt from 'express-jwt';
+import { expressjwt as jwt } from 'express-jwt';
 import jwks from 'jwks-rsa';
 import dotenv from "dotenv"
 
@@ -10,7 +10,7 @@ if (process.env.NODE_ENV !== "production") {
 
 export const authCheck = (req, res, next) =>
   jwt({
-    secret: jwks.expressJwtSecret({
+    secret: jwks({
       cache: true,
       rateLimit: true,
       jwksRequestsPerMinute: 5,
@@ -18,8 +18,8 @@ export const authCheck = (req, res, next) =>
         process.env.PORT || 8080
       }/keys`,
     }),
-    audience: "https://festigram.app/api/",
-    issuer: "https://festigram.app",
+    audience: "https://0441.design/api/",
+    issuer: "https://0441.design",
     algorithms: ["RS256"],
     credentialsRequired: false,
   })(req, res, next);
