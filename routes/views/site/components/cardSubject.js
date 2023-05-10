@@ -6,8 +6,8 @@ if (!global.window) {
 import m from 'mithril';
 import _ from 'lodash';
 
-import Rating from './rating';
-import appUrl from '../../../../bin/common/appUrl';
+import Rating from './rating.js';
+import appUrl from '../../../../bin/common/appUrl.js';
 const cardSubject = {
 	view: ({ attrs }) =>
 		m(

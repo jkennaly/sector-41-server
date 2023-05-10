@@ -5,8 +5,8 @@ if (!global.window) {
 }
 import m from 'mithril';
 
-import Review from './review';
-import SubjectLink from './subjectLink';
+import Review from './review.js';
+import SubjectLink from './subjectLink.js';
 const timeSince = {}
 
 const stats = {

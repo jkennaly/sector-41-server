@@ -10,9 +10,10 @@ import render from 'mithril-node-render';
 import _ from 'lodash';
 
 
-import ListByName from './ListByName';
-import Pagination from './components/pagination';
-import vm from '../../vm/vm_list';
+import ListByName from './ListByName.js';
+import Pagination from './components/pagination.js';
+import CreateButton from './components/createButton.js';
+import vm from '../../vm/vm_list.js';
 
 import fs from 'fs';
 import path from "path"
@@ -32,8 +33,11 @@ const List = options =>
 		const pageNo = parseInt(page, 10)
 		const path = options.path ? options.path : baseUrl + `/site/?page=${pageNo}`
 
+		console.log('list', opt, path)
+
 		vm(opt)
 			.then(fullData => {
+				console.log('fullData', fullData)
 				const allData = !pageNo || fullData.length < 200
 				const startIndex = allData ? 0 : (pageNo - 1) * 100
 				const end = allData ? undefined : startIndex + 100
@@ -51,17 +55,23 @@ const List = options =>
 									baseRoute: opt.baseRoute
 								})
 							), 
+							options.showCreate ? render(
+								m(CreateButton)
+							) : ``, 
 							allData ? `` : render(
 								m(Pagination, {pageNo, pageCount, totalCount, path})
 							)
 						]))
 		//.then(x => console.log('vm list rendered', x) || x)
-			.then(([rendered, pagination]) => template.replace(
+			.then(([rendered, createButton, pagination]) => template.replace(
 						'<div id="component"></div>',
 						rendered
 					).replace(
 						'<div id="pagination"></div>',
 						pagination
+					).replace(
+						'<div id="create-button"></div>',
+						createButton
 					)
 				
 			)

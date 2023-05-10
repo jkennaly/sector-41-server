@@ -6,7 +6,6 @@ if (!global.window) {
 import m from 'mithril';
 import _ from 'lodash';
 
-import Review from './review';
 const timeSince = {}
 
 const stats = {

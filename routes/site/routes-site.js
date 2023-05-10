@@ -9,11 +9,15 @@ import m from 'mithril';
 import render from 'mithril-node-render';
 
 
+
+import List from '../views/site/List.js';
 import Landing from '../views/site/Landing.js';
 import Support from '../views/site/support/Support.js';
 import Request from '../views/site/support/post/Request.js';
 import Problem from '../views/site/support/post/Problem.js';
 import Other from '../views/site/support/post/Other.js';
+import Game from '../views/site/Game.js';
+import AddGame from '../views/site/AddGame.js';
 
 import fs from 'fs'
 import path from "path"
@@ -90,4 +94,32 @@ export function siteRouter(app) {
 		Support(),
 		cachedMon
 	)
+
+	app.get(
+		/site\/games\/?$/,
+		cachedMon,
+		List({
+			apiModel: 'Games',
+			baseRoute: '/site/games/',
+			path: '/site/games?page=',
+			showCreate: true
+		}),
+		cachedMon
+	)
+
+	app.get(
+		'/site/games/edit/:gameId',
+		cachedMon,
+		AddGame(),
+		cachedMon
+	)
+
+	app.get(
+		'/site/games/:gameId',
+		cachedMon,
+		Game({
+		}),
+		cachedMon
+	)
+
 }

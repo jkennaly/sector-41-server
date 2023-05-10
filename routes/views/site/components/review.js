@@ -7,11 +7,11 @@ import m from 'mithril';
 
 import _ from 'lodash';
 import dayjs from 'dayjs';
-import relativeTime from 'dayjs/plugin/relativeTime';
+import relativeTime from 'dayjs/plugin/relativeTime.js';
 dayjs.extend(relativeTime)
 
-import Rating from './rating';
-import appUrl from '../../../../bin/common/appUrl';
+import Rating from './rating.js';
+import appUrl from '../../../../bin/common/appUrl.js';
 const timeSince = {}
 
 const stats = {

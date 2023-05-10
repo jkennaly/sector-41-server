@@ -6,7 +6,7 @@ if (!global.window) {
 import m from 'mithril';
 import _ from 'lodash';
 
-import Star from './star';
+import Star from './star.js';
 const ratingStat = {
 	view: ({ attrs }) =>
 	m('div.px-4.py-5.bg-white.shadow.rounded-lg.overflow-hidden.sm:p-6', 
