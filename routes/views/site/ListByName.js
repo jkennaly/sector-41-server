@@ -20,7 +20,7 @@ const ListByName = {
 							'a.focus:outline-none[name=fts-item]',
 							{
 								href: `${attrs.baseRoute}${encodeURIComponent(
-									s.name
+									s.id || s.name
 								).replace('#', '%23')}`
 							},
 							m(

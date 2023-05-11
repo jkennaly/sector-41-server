@@ -7,6 +7,7 @@ if (!global.window) {
 
 import m from 'mithril';
 import render from 'mithril-node-render';
+import axios from 'axios';
 
 
 
@@ -17,7 +18,7 @@ import Request from '../views/site/support/post/Request.js';
 import Problem from '../views/site/support/post/Problem.js';
 import Other from '../views/site/support/post/Other.js';
 import Game from '../views/site/Game.js';
-import AddGame from '../views/site/AddGame.js';
+import AddModelFactory from '../views/site/model/addModelFactory.js';
 
 import fs from 'fs'
 import path from "path"
@@ -108,16 +109,43 @@ export function siteRouter(app) {
 	)
 
 	app.get(
-		'/site/games/edit/:gameId',
+		'/site/games/edit/:id',
 		cachedMon,
-		AddGame(),
+		AddModelFactory({
+			apiModel: 'Games',
+			baseRoute: '/site/games/edit/:id',
+			path: '/site/games/edit/:id',
+			showCreate: true
+		}),
 		cachedMon
 	)
 
+	app.post(
+		'/site/:apiModel/edit/:id',
+		(req, res, next) => {
+			//relay to api
+			const baseUrl = `${req.protocol}://${req.get('host')}`
+			const params = req.params
+			const body = req.body
+			const { id, apiModel } = params
+			const url = `${baseUrl}/api/${apiModel}/${id}`
+			axios
+				.put(url, body)
+				.then(x => x.data)
+				.then(data => {
+					res.redirect(`/site/${apiModel}/${data.id}`)
+				})
+			}
+	)
+
 	app.get(
-		'/site/games/:gameId',
+		'/site/games/:id',
 		cachedMon,
 		Game({
+			apiModel: 'Games',
+			baseRoute: '/site/games/',
+			path: '/site/games?page=',
+			showCreate: true
 		}),
 		cachedMon
 	)

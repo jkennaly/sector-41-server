@@ -37,12 +37,17 @@ const usersController = {
 
   async updateById(req, res) {
     try {
-      const user = await Games.findByPk(req.params.id);
-      if (user) {
-        await user.update(req.body);
-        res.status(200).json(user);
+      if (req.params.id.startsWith('new')) {
+        const newGame = await Games.create(req.body);
+        res.status(201).json(newGame);
       } else {
-        res.status(404).json({ message: 'User not found' });
+        const game = await Games.findByPk(req.params.id);
+        if (game) {
+          await game.update(req.body);
+          res.status(200).json(game);
+        } else {
+          res.status(404).json({ message: 'Game not found' });
+        }
       }
     } catch (err) {
       console.error(err);

@@ -18,6 +18,13 @@ const sequelize = new Sequelize(
     {
         host: dbConfig.host,
         dialect: 'mysql',
+        logging: (msg) => {
+            if (msg.includes('Executing')) {
+              // Filter out synchronized messages
+              return;
+            }
+            console.log(msg); // Log other messages
+          }
     }
 );
 

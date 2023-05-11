@@ -7,10 +7,11 @@ import _ from 'lodash';
 export default async (opt) => {
 	try {
 	const games = await cachedGet(
-		`/api/Games`,
+		`/api/games`,
 		{ baseURL: opt.baseUrl }
 	)
-	return { games}
+	console.log('vm_game games', games)
+	return games
 	} catch (err) {
 		throw err
 	}

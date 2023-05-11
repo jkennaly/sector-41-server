@@ -1,0 +1,71 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Games",
+  "description": "A JSON representation of the Games model.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "The unique identifier for a game.",
+      "generator": "system"
+    },
+    "name": {
+      "type": "string",
+      "description": "The name of the game.",
+      "minLength": 1,
+      "generator": "user"
+    },
+    "status": {
+      "type": "string",
+      "description": "The status of the game.",
+      "enum": ["completed", "inProgress", "upcoming"],
+      "generator": "user"
+    },
+    "completedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time when the game was completed.",
+      "generator": "system"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time when the game record was created.",
+      "generator": "system"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "The date and time when the game record was last updated.",
+      "generator": "system"
+    },
+    "maxPlayers": {
+      "type": "integer",
+      "description": "The maximum number of players allowed in the game.",
+      "minimum": 1,
+      "generator": "user"
+    },
+    "gameLength": {
+      "type": "integer",
+      "description": "The length of the game in minutes.",
+      "minimum": 1,
+      "generator": "user"
+    },
+    "gameType": {
+      "type": "string",
+      "description": "The type of the game.",
+      "minLength": 1,
+      "generator": "user"
+    }
+  },
+  "required": [
+    "id",
+    "name",
+    "status",
+    "maxPlayers",
+    "gameLength",
+    "gameType"
+  ],
+  "additionalProperties": false
+}

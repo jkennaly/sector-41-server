@@ -37,13 +37,13 @@ const Game = options =>
 	async function(req, res, next) {
 		const baseUrl = `${req.protocol}://${req.get('host')}`
 		//console.log('Game host', baseUrl)
-		const url = `/api/Games`
+		const url = `/api/games`
 		const opt = Object.assign({}, options, { baseUrl: baseUrl, url: url }, req.params)
 
 		try {
-			const games = await vm(opt)
-			const game = games.find(g => g.id === opt.id)
-			const detail = render(GameDetail, { game })
+			const { data: games } = await vm(opt)
+			const game = games.find(g => g.id === parseInt(opt.id, 10))
+			const detail = await render(GameDetail, { game })
 			const html = shell
 				.replace('<div id="component"></div>', detail)
 			res.locals.html = html
