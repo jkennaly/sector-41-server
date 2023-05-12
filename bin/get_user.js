@@ -10,6 +10,7 @@ dotenv.config()
 async function create(con, email, password, suppliedId) {
     try {
         if (!con || (!email && !suppliedId)) throw new Error('required parameter missing')
+        console.log('get_user', email, password)
         //pull db entry for email
         const conn = con.promise()
         const stmt = `SELECT email, hashedpw, salt, access, username, DATE_FORMAT(timestamp, '%Y-%m-%dT%TZ') AS updated_at, emailVerified, mobile_auth_key, picture
@@ -21,6 +22,8 @@ async function create(con, email, password, suppliedId) {
         const [results] = await conn.execute(stmt, values)
 
         if (results.length !== 1) throw new Error('Invalid Credentials')
+
+        console.log('results', email, password, results)
 
         //hash given pw with salt
         const { email: emailDb, hashedpw, salt, access, username, updated_at, emailVerified, mobile_auth_key, picture } = results[0]

@@ -20,8 +20,8 @@ export function getAccessToken(options) {
       gtt,
       process.env.GT_ACCESS_SECRET,
       {
-        audience: "http://festigram/api/",
-        issuer: "http://festigram",
+        audience: "http://0441.design/api/",
+        issuer: "http://0441.design",
         algorithms: ["HS256"],
       },
       (err, decoded) => {

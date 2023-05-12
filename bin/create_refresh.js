@@ -17,7 +17,7 @@ function create({ mobile_auth_key: id }) {
         'https://festigram.app/api/'
       ]
     },
-    claimString(`fest|${id}`, 'sub'),
+    claimString(`0441|${id}`, 'sub'),
   )
   return jwt.sign(claimObject, process.env.REFRESH_TOKEN_SECRET, { expiresIn: 90 * 24 * 60 * 60 })
 

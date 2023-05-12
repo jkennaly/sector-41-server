@@ -34,9 +34,9 @@ function create(con) {
       //find accessible days
       const claimObject = Object.assign(
         {
-          iss: 'https://festigram.app',
+          iss: 'https://0441.design',
           aud: [
-            'https://festigram.app/api/'
+            'https://0441.design/api/'
           ],
           exp: 0
         },

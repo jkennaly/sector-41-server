@@ -12,6 +12,7 @@ import axios from 'axios';
 
 
 import List from '../views/site/List.js';
+import Lobby from '../views/site/Lobby.js';
 import Landing from '../views/site/Landing.js';
 import Support from '../views/site/support/Support.js';
 import Request from '../views/site/support/post/Request.js';
@@ -136,6 +137,13 @@ export function siteRouter(app) {
 					res.redirect(`/site/${apiModel}/${data.id}`)
 				})
 			}
+	)
+
+	app.get(
+		'/site/:eventModel/lobby',
+		Lobby({
+			showCreate: true
+		})
 	)
 
 	app.get(

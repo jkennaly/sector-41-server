@@ -1,7 +1,7 @@
 // server/middleware/get-user-id.js
 
 import _ from 'lodash';
-//const mysql = require('mysql2')
+//import mysql from 'mysql2';
 
 export function getUserId(options) {
   return function (req, res, next) {

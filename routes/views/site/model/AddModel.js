@@ -10,10 +10,7 @@ const template = fs.readFileSync(path.resolve(__dirname, '../shell.html'), 'utf8
 
 const schemaCache = {};
 
-const handleSubmit = (e) => {
-  e.preventDefault();
-  // Add form submission logic here
-};
+
 
 const generateForm = (schema, data) => {
   return Object.keys(schema.properties).map((prop) => {
@@ -63,7 +60,7 @@ const AddModel = {
     const schema = schemaCache[apiModel];
     const data = {};
 
-    return m('form', { onsubmit: handleSubmit }, [
+    return m('form', { onsubmit: handleSubmit(apiModel) }, [
       ...generateForm(schema, data),
       m(
         '.flex.items-center.justify-between.mt-8',

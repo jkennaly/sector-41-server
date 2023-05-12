@@ -58,9 +58,9 @@ function create(jwks, scopes = defaultScopes, { email, access, username, updated
 
   const claimObject = Object.assign(
     {
-      iss: 'https://festigram.app',
+      iss: 'https://0441.design',
       aud: [
-        'https://festigram.app/api/'
+        'https://0441.design/api/'
       ]
     },
     claimRoles(access),
@@ -68,7 +68,7 @@ function create(jwks, scopes = defaultScopes, { email, access, username, updated
     claimString(email, 'email'),
     claimString(username, 'nickname'),
     claimString(picture, 'picture'),
-    claimString(`fest|${id}`, 'sub'),
+    claimString(`0441|${id}`, 'sub'),
     claimTime(updated_at),
     claimBool(emailVerified, 'email_verified'),
     claimScope(scopes, access)

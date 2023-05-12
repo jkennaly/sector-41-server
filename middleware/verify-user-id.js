@@ -1,6 +1,6 @@
 // server/middleware/verify-user-id.js
 import _ from 'lodash';
-//const mysql = require('mysql2')
+//import mysql from 'mysql2';
 
 
 var inProgress = false;

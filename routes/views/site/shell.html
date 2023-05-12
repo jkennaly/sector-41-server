@@ -44,12 +44,42 @@
 		gtag('js', new Date());
 
 		gtag('config', 'G-HERSZF6YBR');
+		function getQueryParams() {
+    var params = {};
+    var search = window.location.search.substring(1);
+    var pairs = search.split('&');
+    for (var i = 0; i < pairs.length; i++) {
+      var pair = pairs[i].split('=');
+      var key = decodeURIComponent(pair[0]);
+      var value = decodeURIComponent(pair[1] || '');
+      params[key] = value;
+    }
+    return params;
+  }
+
+  // Check if "token" query parameter exists
+  var queryParams = getQueryParams();
+  if (queryParams.hasOwnProperty('token')) {
+    // Get the token value
+    var token = queryParams.token;
+
+    // Store the token in localStorage
+    localStorage.setItem('token', token);
+
+    // Remove the "token" query parameter from the URL
+    delete queryParams.token;
+    var newUrl = window.location.pathname + '?' + new URLSearchParams(queryParams).toString();
+
+    // Reload the page with the modified URL
+    window.location.href = newUrl;
+  }
 	</script>
 </head>
 
 <body>
 	<div x-data="{
-			isGames: /site\/games\/?($|\?)/.test(window.location.href),
+		isGames: /site\/games\/?($|\?)/.test(window.location.href),
+		isLobby: /site\/w+\/lobby\/?($|\?)/.test(window.location.href),
 			isLanding: /site\/?$/.test(window.location.href),
 			isSupport: /site\/support\/?($|\?)/.test(window.location.href),
 			isOpen: false
@@ -65,13 +95,20 @@
 							<div class="ml-10 flex items-baseline space-x-4">
 								<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
 
+								<a :class="{'text-gray-300 hover:bg-gray-700 hover:text-white'}"
+									href="/authorize/login"
+									class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Login</a>
 								<a :class="{'bg-gray-900 text-white' : isLanding, 'text-gray-300 hover:bg-gray-700 hover:text-white': !isLanding}"
 									href="/site"
 									class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
 								<a href="https://festigram.app"
 									class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">FestiGram</a>
 
-								<a :class="{'bg-gray-900 text-white' : isGames, 'text-gray-300 hover:bg-gray-700 hover:text-white': !isGames}"
+									<a :class="{'bg-gray-900 text-white' : isLobby, 'text-gray-300 hover:bg-gray-700 hover:text-white': !isLobby}"
+									href="/site/games/lobby"
+									class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Lobby</a>
+
+									<a :class="{'bg-gray-900 text-white' : isGames, 'text-gray-300 hover:bg-gray-700 hover:text-white': !isGames}"
 									href="/site/games?page=1"
 									class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Games</a>
 
@@ -120,13 +157,20 @@
 					<div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
 						<!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
 
+						<a :class="{'text-gray-300 hover:bg-gray-700 hover:text-white'}"
+							href="/authorize/login"
+							class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Login</a>
 						<a :class="{'bg-gray-900 text-white' : isLanding, 'text-gray-300 hover:bg-gray-700 hover:text-white': !isLanding}"
 							href="/site"
 							class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
 						<a href="http://festigram.app"
 							class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">FestiGram</a>
 
-						<a :class="{'bg-gray-900 text-white' : isGames, 'text-gray-300 hover:bg-gray-700 hover:text-white': !isGames}"
+							<a :class="{'bg-gray-900 text-white' : isLobby, 'text-gray-300 hover:bg-gray-700 hover:text-white': !isLobby}"
+							href="/site/games/lobby"
+							class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Lobby</a>
+
+							<a :class="{'bg-gray-900 text-white' : isGames, 'text-gray-300 hover:bg-gray-700 hover:text-white': !isGames}"
 							href="/site/games?page=1"
 							class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Games</a>
 
@@ -149,6 +193,35 @@
 			</div>
 		</main>
 	</div>
+	<script>
+		const handleSubmit = apiModel => (e) => {
+  e.preventDefault(); // Prevent form submission
+  console.log('submitting form');
+
+  const token = localStorage.getItem("token");
+  
+  const form = e.target;
+  const formData = new FormData(form);
+  
+  fetch(`/api/${apiModel}/`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`
+    },
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    const { id } = data;
+    const url = `/site/${apiModel}/${id}`;
+    window.location.href = url; // Navigate to the specified URL
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    // Handle any errors that occur during the request
+  });
+};
+	</script>
 </body>
 
 </html>

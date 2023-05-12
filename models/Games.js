@@ -16,6 +16,10 @@ const Games = sequelize.define('Games', {
     type: Sequelize.ENUM('completed', 'inProgress', 'upcoming'),
     allowNull: false,
   },
+  gmId: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
   completedAt: {
     type: Sequelize.DATE,
   },

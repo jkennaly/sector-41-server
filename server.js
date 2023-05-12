@@ -7,6 +7,7 @@ import { getUserId } from './middleware/get-user-id.js';
 import { verifyUserId } from './middleware/verify-user-id.js';
 import { getAccessToken } from './middleware/gt-access-token.js';
 import boot from './boot.js';
+import cookieParser from 'cookie-parser';
 
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -35,14 +36,28 @@ sequelize.sync()
     // Parse URL-encoded form data
     app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
-  
-  // app.use((req, res, next) => {
-  //   console.log('Request received!');
-  //   next();
-  // })
 
   
   app.use(createConnection());
+
+  app.use(cookieParser());
+
+// Custom middleware to extract token from cookie and pass it to express-jwt
+app.use((req, res, next) => {
+  if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+    // Token is already provided in the Authorization header
+    return next();
+  }
+
+  if (req.params && req.params.token) {
+    // Extract token from cookie and set it in the Authorization header
+    req.headers.authorization = `Bearer ${req.params.token}`;
+    console.log('Token extracted from params and set in the Authorization header', req.headers.authorization);
+  }
+
+
+  next();
+});
   app.use(authCheck);
   
   // Call the "get-user-id" middleware for the specified paths
@@ -53,6 +68,11 @@ sequelize.sync()
   
   // Call the "get-access-token" middleware after all other middleware has run
   app.use(getAccessToken());
+  
+  app.use((req, res, next) => {
+    console.log('Request received!', req.user);
+    next();
+  })
 app.use(routes);
 
 // Serve static files
