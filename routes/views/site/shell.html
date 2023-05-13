@@ -112,6 +112,10 @@
 									href="/site/games?page=1"
 									class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Games</a>
 
+									<a :class="{'text-gray-300 hover:bg-gray-700 hover:text-white'}"
+									href="/app/gm"
+									class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Play As GM</a>
+
 								<a :class="{'bg-gray-900 text-white' : isSupport, 'text-gray-300 hover:bg-gray-700 hover:text-white': !isSupport}"
 									href="/site/support"
 									class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Support</a>
@@ -174,6 +178,10 @@
 							href="/site/games?page=1"
 							class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Games</a>
 
+						<a :class="{'text-gray-300 hover:bg-gray-700 hover:text-white'}"
+							href="/app/gm"
+							class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Play as GM</a>
+
 						<a :class="{'bg-gray-900 text-white' : isSupport, 'text-gray-300 hover:bg-gray-700 hover:text-white': !isSupport}"
 							href="/site/support"
 							class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Support</a>
@@ -193,35 +201,6 @@
 			</div>
 		</main>
 	</div>
-	<script>
-		const handleSubmit = apiModel => (e) => {
-  e.preventDefault(); // Prevent form submission
-  console.log('submitting form');
-
-  const token = localStorage.getItem("token");
-  
-  const form = e.target;
-  const formData = new FormData(form);
-  
-  fetch(`/api/${apiModel}/`, {
-    method: "POST",
-    headers: {
-      "Authorization": `Bearer ${token}`
-    },
-    body: formData
-  })
-  .then(response => response.json())
-  .then(data => {
-    const { id } = data;
-    const url = `/site/${apiModel}/${id}`;
-    window.location.href = url; // Navigate to the specified URL
-  })
-  .catch(error => {
-    console.error("Error:", error);
-    // Handle any errors that occur during the request
-  });
-};
-	</script>
 </body>
 
 </html>

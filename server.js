@@ -8,6 +8,20 @@ import { verifyUserId } from './middleware/verify-user-id.js';
 import { getAccessToken } from './middleware/gt-access-token.js';
 import boot from './boot.js';
 import cookieParser from 'cookie-parser';
+import unless from 'express-unless';
+
+import cors from 'cors'
+const corsOptions = {
+  origin: [
+      'http://localhost:8181',
+      'https://festigram.app',
+      'http://localhost:3000',
+      'http://localhost:3001',
+      'http://localhost:3002',
+  ],
+  credentials: true,
+  maxAge: 86400
+};
 
 import { fileURLToPath } from 'url';
 import path from 'path';
@@ -34,6 +48,9 @@ sequelize.sync()
   (async () => {
     await boot(app);
     // Parse URL-encoded form data
+
+  
+  app.use(cors(corsOptions));
     app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
 
@@ -55,10 +72,22 @@ app.use((req, res, next) => {
     console.log('Token extracted from params and set in the Authorization header', req.headers.authorization);
   }
 
-
+  
   next();
 });
-  app.use(authCheck);
+  authCheck.unless = unless;
+  app.use(authCheck.unless({
+    path: [
+      '/api/Profiles/getUserId',
+      '/api/Profiles/getAccessToken',
+      '/authorize/refresh'
+    ]
+  }));
+  app.use((req, res, next) => {
+    //log request recvd and route
+    console.log('Request received!', req.originalUrl, req.user );
+    next();
+  })
   
   // Call the "get-user-id" middleware for the specified paths
   app.use('/api/Profiles/getUserId*', getUserId());
@@ -69,10 +98,6 @@ app.use((req, res, next) => {
   // Call the "get-access-token" middleware after all other middleware has run
   app.use(getAccessToken());
   
-  app.use((req, res, next) => {
-    console.log('Request received!', req.user);
-    next();
-  })
 app.use(routes);
 
 // Serve static files

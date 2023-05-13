@@ -10,6 +10,33 @@ const template = fs.readFileSync(path.resolve(__dirname, '../shell.html'), 'utf8
 
 const schemaCache = {};
 
+const handleSubmit = apiModel => (e) => {
+  e.preventDefault(); // Prevent form submission
+  console.log('submitting form');
+
+  const token = localStorage.getItem("token");
+  
+  const form = e.target;
+  const formData = new FormData(form);
+  
+  fetch(`/api/${apiModel}/`, {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${token}`
+    },
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    const { id } = data;
+    const url = `/site/${apiModel}/${id}`;
+    window.location.href = url; // Navigate to the specified URL
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    // Handle any errors that occur during the request
+  });
+};
 
 
 const generateForm = (schema, data) => {
