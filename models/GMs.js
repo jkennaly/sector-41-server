@@ -1,7 +1,6 @@
 import Sequelize from 'sequelize';
 import sequelize from '../db/sequelize.js';
 import Games from './Games.js';
-import Sessions from './Sessions.js';
 
 const GMs = sequelize.define('GMs', {
   id: {
@@ -22,8 +21,5 @@ const GMs = sequelize.define('GMs', {
 
 GMs.hasMany(Games);
 Games.belongsTo(GMs);
-
-GMs.hasMany(Sessions);
-Sessions.belongsTo(GMs);
 
 export default GMs;

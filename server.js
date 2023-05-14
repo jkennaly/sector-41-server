@@ -83,11 +83,11 @@ app.use((req, res, next) => {
       '/authorize/refresh'
     ]
   }));
-  app.use((req, res, next) => {
-    //log request recvd and route
-    console.log('Request received!', req.originalUrl, req.user );
-    next();
-  })
+  // app.use((req, res, next) => {
+  //   //log request recvd and route
+  //   console.log('Request received!', req.originalUrl, req.user );
+  //   next();
+  // })
   
   // Call the "get-user-id" middleware for the specified paths
   app.use('/api/Profiles/getUserId*', getUserId());

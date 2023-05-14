@@ -1,9 +1,10 @@
 import Sequelize from 'sequelize';
 import sequelize from '../db/sequelize.js';
 
+import Games from './Games.js';
+import Players from './Players.js';
+import GMs from './GMs.js';
 
-console.log('models: ', Object.keys(sequelize.models));
-const { Players, Games, Gms } = sequelize.models;
 
 const Sessions = sequelize.define('Sessions', {
   id: {
@@ -41,8 +42,9 @@ const PlayerSessions = sequelize.define('PlayerSessions', {});
 Players.belongsToMany(Sessions, { through: PlayerSessions });
 
 Sessions.belongsTo(Games, { foreignKey: 'gameId' });
-Sessions.belongsTo(Gms, { foreignKey: 'gmId' });
+Sessions.belongsTo(GMs, { foreignKey: 'gmId' });
 Sessions.belongsToMany(Players, { through: 'session_players' });
+
 
 
 export default Sessions;

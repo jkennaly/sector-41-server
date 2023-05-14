@@ -23,7 +23,7 @@ async function create(con, email, password, suppliedId) {
 
         if (results.length !== 1) throw new Error('Invalid Credentials')
 
-        console.log('results', email, password, results)
+        //console.log('results', email, password, results)
 
         //hash given pw with salt
         const { email: emailDb, hashedpw, salt, access, username, updated_at, emailVerified, mobile_auth_key, picture } = results[0]

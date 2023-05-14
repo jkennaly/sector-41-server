@@ -1,6 +1,9 @@
 // Import the User model defined in the Users.js file
 import Games from './models/Games.js';
+import Sessions from './models/Sessions.js';
 import Users from './models/Users.js';
+import Players from './models/Players.js';
+import GMs from './models/GMs.js';
 import UserAliases from './models/UserAliases.js';
 import Intentions from './models/Intentions.js';
 import Interactions from './models/Interactions.js';
@@ -14,6 +17,9 @@ import MessageTypes from './models/MessageTypes.js';
 export { 
     Games,
     Users,
+    Players,
+    GMs,
+    Sessions,
     UserAliases,
     Intentions,
     Interactions,
