@@ -1,4 +1,4 @@
-import { Games } from '../models.js';
+import { Games, Users, Sessions } from '../models.js';
 
 const gamesController = {
   async create(req, res) {
@@ -30,7 +30,7 @@ const gamesController = {
       if (game) {
         res.status(200).json(game);
       } else {
-        res.status(404).json({ message: 'User not found' });
+        res.status(404).json({ message: 'Game not found' });
       }
     } catch (err) {
       console.error(err);
@@ -77,6 +77,22 @@ const gamesController = {
       res.status(500).json({ message: 'Internal server error' });
     }
   },
+  async getByIdWithAssociations(req, res) {
+    try {
+      const game = await Games.findByPk(req.params.id, {
+        include: ['gm', 'players', 'sessions'],
+      });
+      if (game) {
+        res.status(200).json(game);
+      } else {
+        res.status(404).json({ message: 'Game not found' });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  },
+  
 };
 
 export default gamesController;

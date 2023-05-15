@@ -1,6 +1,8 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db/sequelize.js';
 
+import Games from './Games.js';
+import Sessions from './Sessions.js';
 const Users = sequelize.define('Users', {
   id: {
     type: DataTypes.INTEGER(6),
@@ -128,5 +130,16 @@ const Users = sequelize.define('Users', {
   charset: 'utf8',
   collate: 'utf8_unicode_ci'
 });
+
+Users.associate = function(models) {
+  Users.hasMany(models.Games, { as: 'gamesGMed', foreignKey: 'gmId' });
+  Users.belongsToMany(models.Games, { through: 'GamePlayers', as: 'gamesPlayed', foreignKey: 'userId' });
+
+
+  Users.hasMany(models.Sessions, { as: 'sessionsGMed', foreignKey: 'gmId' });
+  Users.belongsToMany(models.Sessions, { through: 'SessionPlayers', as: 'sessionsPlayed', foreignKey: 'userId' });
+}
+
+
 
 export default Users;

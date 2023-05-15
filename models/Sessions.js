@@ -2,8 +2,7 @@ import Sequelize from 'sequelize';
 import sequelize from '../db/sequelize.js';
 
 import Games from './Games.js';
-import Players from './Players.js';
-import GMs from './GMs.js';
+import Users from './Users.js';
 
 
 const Sessions = sequelize.define('Sessions', {
@@ -37,13 +36,9 @@ const Sessions = sequelize.define('Sessions', {
 
 
 
-// Define many-to-many relationship with Sessions model
-const PlayerSessions = sequelize.define('PlayerSessions', {});
-Players.belongsToMany(Sessions, { through: PlayerSessions });
-
-Sessions.belongsTo(Games, { foreignKey: 'gameId' });
-Sessions.belongsTo(GMs, { foreignKey: 'gmId' });
-Sessions.belongsToMany(Players, { through: 'session_players' });
+Sessions.belongsTo(Games, { as: 'game', foreignKey: 'gameId' });
+Sessions.belongsTo(Users, { as: 'gm', foreignKey: 'gmId' });
+Sessions.belongsToMany(Users, { through: 'SessionPlayers', as: 'players', foreignKey: 'sessionId' });
 
 
 

@@ -12,6 +12,10 @@ const Games = sequelize.define('Games', {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  description: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   status: {
     type: Sequelize.ENUM('completed', 'inProgress', 'upcoming'),
     allowNull: false,
@@ -19,6 +23,10 @@ const Games = sequelize.define('Games', {
   gmId: {
     type: Sequelize.INTEGER,
     allowNull: false,
+    references: {
+      model: 'Users', // assuming your User model is named 'Users' in the database
+      key: 'id',
+    },
   },
   completedAt: {
     type: Sequelize.DATE,
@@ -45,5 +53,12 @@ const Games = sequelize.define('Games', {
     allowNull: false,
   },
 });
+
+Games.associate = function(models) {
+  Games.belongsTo(models.Users, { as: 'gm', foreignKey: 'gmId' });
+  Games.belongsToMany(models.Users, { through: 'GamePlayers', as: 'players', foreignKey: 'gameId' });
+  Games.hasMany(models.Sessions, { as: 'sessions', foreignKey: 'gameId' });
+};
+
 
 export default Games;

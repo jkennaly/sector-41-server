@@ -2,8 +2,6 @@
 import Games from './models/Games.js';
 import Sessions from './models/Sessions.js';
 import Users from './models/Users.js';
-import Players from './models/Players.js';
-import GMs from './models/GMs.js';
 import UserAliases from './models/UserAliases.js';
 import Intentions from './models/Intentions.js';
 import Interactions from './models/Interactions.js';
@@ -14,11 +12,9 @@ import MessageTypes from './models/MessageTypes.js';
 
 
 // Export the User model for use in other parts of the application
-export { 
+const models = { 
     Games,
     Users,
-    Players,
-    GMs,
     Sessions,
     UserAliases,
     Intentions,
@@ -28,3 +24,23 @@ export {
     MessagesMonitor,
     MessageTypes
 };
+
+Object.values(models).forEach(model => {
+    if (model.associate) {
+        model.associate(models);
+    }
+}
+);
+
+export { 
+    Games,
+    Users,
+    Sessions,
+    UserAliases,
+    Intentions,
+    Interactions,
+    InteractionTypes,
+    Messages,
+    MessagesMonitor,
+    MessageTypes
+}
