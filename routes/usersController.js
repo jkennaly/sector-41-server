@@ -21,6 +21,26 @@ const usersController = {
     }
   },
 
+  async getBatchById(req, res) {
+    try {
+      const ids = req.query.ids.split(',').map(id => parseInt(id, 10)); // convert comma-separated string to array of numbers
+      const users = await Users.findAll({
+        where: {
+          id: ids
+        }
+      });
+      if (users && users.length > 0) {
+        res.status(200).json(users);
+      } else {
+        res.status(404).json({ message: 'Users not found' });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  },
+  
+
   async getById(req, res) {
     try {
       const user = await Users.findByPk(req.params.id);
