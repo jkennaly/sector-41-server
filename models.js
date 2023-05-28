@@ -9,6 +9,26 @@ import InteractionTypes from './models/InteractionTypes.js';
 import Messages from './models/Messages.js';
 import MessagesMonitor from './models/MessagesMonitor.js';
 import MessageTypes from './models/MessageTypes.js';
+import {
+    Characters,
+    Armors,
+    Augmentations,
+    CoreCharacteristics,
+    Equipment,
+    Finances,
+    LifePaths,
+    PersonalDataFile,
+    Skills,
+    Weapons,
+    ArmorOptions,
+    EquipmentTraits,
+    CareerTerms,
+    Connections,
+    MusteringOuts,
+    PreCareerTerms,
+    RacialAlternatives
+} from './models/games/mgt2e/characters/index.js';
+import { Effects, Portrait, SourceReferences } from './models/games/index.js';
 
 
 // Export the User model for use in other parts of the application
@@ -22,7 +42,27 @@ const models = {
     InteractionTypes,
     Messages,
     MessagesMonitor,
-    MessageTypes
+    MessageTypes,
+    Characters,
+    Armors,
+    Augmentations,
+    CoreCharacteristics,
+    Equipment,
+    Finances,
+    LifePaths,
+    PersonalDataFile,
+    Skills,
+    Weapons,
+    Effects,
+    Portrait,
+    SourceReferences,
+    ArmorOptions,
+    EquipmentTraits,
+    CareerTerms,
+    Connections,
+    MusteringOuts,
+    PreCareerTerms,
+    RacialAlternatives
 };
 
 Object.values(models).forEach(model => {
@@ -42,5 +82,25 @@ export {
     InteractionTypes,
     Messages,
     MessagesMonitor,
-    MessageTypes
+    MessageTypes,
+    Characters,
+    Armors,
+    Augmentations,
+    CoreCharacteristics,
+    Equipment,
+    Finances,
+    LifePaths,
+    PersonalDataFile,
+    Skills,
+    Weapons,
+    Effects,
+    Portrait,
+    SourceReferences,
+    ArmorOptions,
+    EquipmentTraits,
+    CareerTerms,
+    Connections,
+    MusteringOuts,
+    PreCareerTerms,
+    RacialAlternatives
 }

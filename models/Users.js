@@ -1,8 +1,6 @@
 import { DataTypes } from 'sequelize';
 import sequelize from '../db/sequelize.js';
 
-import Games from './Games.js';
-import Sessions from './Sessions.js';
 const Users = sequelize.define('Users', {
   id: {
     type: DataTypes.INTEGER(6),
