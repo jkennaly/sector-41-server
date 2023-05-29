@@ -26,9 +26,9 @@ import {
     Connections,
     MusteringOuts,
     PreCareerTerms,
-    RacialAlternatives
+    RacialAlternatives,
 } from './models/games/mgt2e/characters/index.js';
-import { Effects, Portrait, SourceReferences } from './models/games/index.js';
+import { Effects, Portrait, SourceReferences, LoreObject } from './models/games/index.js';
 
 
 // Export the User model for use in other parts of the application
@@ -62,7 +62,8 @@ const models = {
     Connections,
     MusteringOuts,
     PreCareerTerms,
-    RacialAlternatives
+    RacialAlternatives,
+    LoreObject
 };
 
 Object.values(models).forEach(model => {
@@ -102,5 +103,6 @@ export {
     Connections,
     MusteringOuts,
     PreCareerTerms,
-    RacialAlternatives
+    RacialAlternatives,
+    LoreObject
 }

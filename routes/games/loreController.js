@@ -1,12 +1,12 @@
-import { Games, Users, Sessions, Characters } from '../models.js';
+import { LoreObject } from '../../models.js';
 
-const gamesController = {
+const loreController = {
   async create(req, res) {
     try {
       const user = req.user || { ftUserId: 0 };
       req.body.gmId = user.ftUserId;
       if(!req.body.gmId) throw new Error('No gmId provided');
-      const game = await Games.create(req.body);
+      const game = await LoreObject.create(req.body);
       res.status(201).json(game);
     } catch (err) {
       console.error(err);
@@ -16,7 +16,7 @@ const gamesController = {
 
   async getAll(req, res) {
     try {
-      const games = await Games.findAll();
+      const games = await LoreObject.findAll();
       res.status(200).json(games);
     } catch (err) {
       console.error(err);
@@ -26,7 +26,7 @@ const gamesController = {
 
   async getById(req, res) {
     try {
-      const game = await Games.findByPk(req.params.id);
+      const game = await LoreObject.findByPk(req.params.id);
       if (game) {
         res.status(200).json(game);
       } else {
@@ -41,7 +41,7 @@ const gamesController = {
   async getByIdWithCharacters(req, res) {
     try {
       const user = req.user || { ftUserId: 0 };
-      const game = await Games.findByPk(req.params.id);
+      const game = await LoreObject.findByPk(req.params.id);
 
       if (game) {
         const gmId = game.gmId;
@@ -93,10 +93,10 @@ const gamesController = {
       if(!req.body.gmId) throw new Error('No gmId provided');
       
       if (req.params.id.startsWith('new')) {
-        const newGame = await Games.create(req.body);
+        const newGame = await LoreObject.create(req.body);
         res.status(201).json(newGame);
       } else {
-        const game = await Games.findByPk(req.params.id);
+        const game = await LoreObject.findByPk(req.params.id);
         if (game) {
           await game.update(req.body);
           res.status(200).json(game);
@@ -113,7 +113,7 @@ const gamesController = {
   async deleteById(req, res) {
     try {
       const user = req.user || { ftUserId: 0 };
-      const game = await Games.findByPk(req.params.id);
+      const game = await LoreObject.findByPk(req.params.id);
       if (game && game.gmId === user.ftUserId) {
         await game.destroy();
         res.status(204).json();
@@ -127,7 +127,7 @@ const gamesController = {
   },
   async getByIdWithAssociations(req, res) {
     try {
-      const game = await Games.findByPk(req.params.id, {
+      const game = await LoreObject.findByPk(req.params.id, {
         include: ['gm', 'players', 'sessions'],
       });
       if (game) {
@@ -143,4 +143,4 @@ const gamesController = {
   
 };
 
-export default gamesController;
+export default loreController;
