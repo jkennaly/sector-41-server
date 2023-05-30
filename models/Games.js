@@ -58,6 +58,10 @@ Games.associate = function(models) {
   Games.belongsTo(models.Users, { as: 'gm', foreignKey: 'gmId' });
   Games.belongsToMany(models.Users, { through: 'GamePlayers', as: 'players', foreignKey: 'gameId' });
   Games.hasMany(models.Sessions, { as: 'sessions', foreignKey: 'gameId' });
+  Games.hasOne(models.UniverseContext, {
+    foreignKey: 'gameId',
+    as: 'universe', 
+  });
 };
 
 
