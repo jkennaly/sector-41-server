@@ -74,7 +74,8 @@ function create(jwks, scopes = defaultScopes, { email, access, username, updated
     claimScope(scopes, access)
   )
   return jwt.sign(claimObject, process.env.LOCAL_SECRET, {
-    expiresIn: '10m',
+    //expiresIn: '10m',
+    expiresIn: '24h',
     algorithm: 'RS256',
     keyid: jwks.keys[0].kid
 

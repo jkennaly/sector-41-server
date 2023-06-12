@@ -9,12 +9,16 @@ export const Portrait = sequelize.define('Portrait', {
     primaryKey: true,
   },
   name: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: true,
   },
   imageUrl: {
-    type: DataTypes.STRING,
-    allowNull: false,
+    type: DataTypes.TEXT,
+    allowNull: true,
+  },
+  imageId: {
+    type: DataTypes.INTEGER,
+    allowNull: true,
   },
   personalDataFileId: {
     type: DataTypes.INTEGER,
@@ -26,8 +30,10 @@ export const Portrait = sequelize.define('Portrait', {
   },
 });
 
+
 Portrait.associate = function(models) {
   Portrait.belongsTo(models.PersonalDataFile, { foreignKey: 'personalDataFileId' });
+  Portrait.hasOne(models.S3Image, { foreignKey: 'imageId' })
 };
 
 export default Portrait;

@@ -29,7 +29,11 @@ const PersonalDataFile = sequelize.define('PersonalDataFile', {
     allowNull: true,
   },
   distinguishingFeatures: {
-    type: DataTypes.TEXT,
+    type: DataTypes.JSON,
+    allowNull: true,
+  },
+  traits: {
+    type: DataTypes.JSON,
     allowNull: true,
   },
   currentPortraitId: {
@@ -49,14 +53,13 @@ const PersonalDataFile = sequelize.define('PersonalDataFile', {
     },
   },
   backgroundNotes: {
-    type: DataTypes.TEXT,
+    type: DataTypes.JSON,
     allowNull: true,
   },
 });
 
 PersonalDataFile.associate = function(models) {
   PersonalDataFile.belongsTo(models.Characters, { foreignKey: 'ownerId' });
-  PersonalDataFile.hasMany(models.Effects, { as: 'traits', foreignKey: 'personalDataFileId' });
   PersonalDataFile.belongsTo(models.Portrait, { as: 'currentPortrait', foreignKey: 'currentPortraitId' });
 };
 

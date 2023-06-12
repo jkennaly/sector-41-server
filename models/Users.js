@@ -19,8 +19,7 @@ const Users = sequelize.define('Users', {
   },
   email: {
     type: DataTypes.STRING(100),
-    allowNull: false,
-    unique: true
+    allowNull: false
   },
   picture: {
     type: DataTypes.TEXT,
@@ -123,10 +122,13 @@ const Users = sequelize.define('Users', {
     defaultValue: null
   }
 }, {
-  tableName: 'Users',
-  engine: 'InnoDB',
-  charset: 'utf8',
-  collate: 'utf8_unicode_ci'
+  indexes: [
+    {
+      unique: true,
+      fields: ['email'],
+      name: 'email'
+    }
+  ]
 });
 
 Users.associate = function(models) {

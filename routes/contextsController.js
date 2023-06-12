@@ -16,6 +16,8 @@ const contextsController = {
 
   async getGameContext(req, res) {
     try {
+      if(!req.user) return res.status(401).json({ message: 'Unauthorized' });
+      //console.log('getGameCtx req.user', req.user );
       const context = await UniverseContext.findOne({
         where: {
           gameId: req.params.id,
@@ -25,7 +27,14 @@ const contextsController = {
       if (context) {
         res.status(200).json(context);
       } else {
-        res.status(404).json({ message: 'Context not found' });
+        //create a new UniverseContext for the game
+        const user = req.user || { ftUserId: 0 };
+        req.body.creatorId = user.ftUserId;
+        req.body.gameId = req.params.id;
+        req.body.name = `Traveller RPG`;
+        req.body.description = `The Universe is composed of countless galaxies, but only the Milky Way Galaxy is known to the people of Charted Space.`;
+        const newContext = await UniverseContext.create(req.body);
+        res.status(201).json(newContext);
       }
     } catch (err) {
       console.error(err);

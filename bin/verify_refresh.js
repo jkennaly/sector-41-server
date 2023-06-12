@@ -7,6 +7,7 @@ dotenv.config()
 
 
 async function verify(con, refreshToken) {
+  try {
     const conn = con.promise()
     const stmt = `SELECT mobile_auth_key
     FROM Users 
@@ -18,6 +19,10 @@ async function verify(con, refreshToken) {
     const values = [id]
     const [results] = await conn.execute(stmt, values)
     return results.length === 1 ? id : false
+  } catch (err) {
+    console.error(err)
+    return false
+  }
 }
 
 export default verify

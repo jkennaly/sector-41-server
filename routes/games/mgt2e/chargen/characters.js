@@ -1,9 +1,22 @@
 //Create routes for Characters
 import express from 'express';
 import charController from './charController.js';
+import pdfController from './pdfController.js';
 
 const router = express.Router();
 
+
+
+router.post('/:characterId/pdf/portrait', pdfController.createPortrait);
+router.post('/:characterId/pdf/', pdfController.create);
+router.get('/:characterId/pdf/', pdfController.getAll);
+router.get('/:characterId/pdf/:id', pdfController.getById);
+router.get('/:characterId/pdf/inclusive/:id', pdfController.getByIdWithAssociations);
+router.put('/:characterId/pdf/:id', pdfController.updateById);
+router.delete('/:characterId/pdf/:id', pdfController.deleteById);
+
+router.get('/pc/:gameId', charController.getPcByGameId);
+router.get('/available/:gameId', charController.getAllByGameId);
 
 router.post('/:gameId', charController.create);
 router.get('/', charController.getAll);

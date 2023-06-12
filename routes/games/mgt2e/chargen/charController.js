@@ -97,20 +97,57 @@ const charController = {
   async getByIdWithAssociations(req, res) {
     try {
       const character = await Characters.findByPk(req.params.id, {
-        include: [
-          { model: Armors, as: 'armor' },
-          { model: Augmentations, as: 'augmentations' },
-          { model: CoreCharacteristics, as: 'coreCharacteristics' },
-          { model: Equipment, as: 'equipment' },
-          { model: Finances, as: 'finances' },
-          { model: LifePaths, as: 'lifePaths' },
-          { model: PersonalDataFile, as: 'personalDataFile' },
-          { model: Skills, as: 'skills' },
-          { model: Weapons, as: 'weapons' },
-        ],
+        include: { all: true },
       });
       if (character) {
         res.status(200).json(character);
+      } else {
+        res.status(404).json({ message: 'Game not found' });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  },
+  async getPcByGameId(req, res) {
+    try {
+      const gameId = parseInt(req.params.gameId, 10)
+      const user = req.user || { ftUserId: 0 };
+      const ownerId = user.ftUserId;
+      if(!gameId) throw new Error('No gameId provided');
+      if(!ownerId) throw new Error('No ownerId provided');
+      const characters = await Characters.findAll({
+        include: { all: true },
+        where: {
+          ownerId,
+          gameId,
+        }
+      });
+      if (characters) {
+        res.status(200).json(characters);
+      } else {
+        res.status(404).json({ message: 'Game not found' });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  },
+  async getAllByGameId(req, res) {
+    try {
+      const gameId = parseInt(req.params.gameId, 10)
+      const user = req.user || { ftUserId: 0 };
+      const ownerId = user.ftUserId;
+      if(!gameId) throw new Error('No gameId provided');
+      if(!ownerId) throw new Error('No ownerId provided');
+      const characters = await Characters.findAll({
+        include: { all: true },
+        where: {
+          gameId,
+        }
+      });
+      if (characters) {
+        res.status(200).json(characters);
       } else {
         res.status(404).json({ message: 'Game not found' });
       }

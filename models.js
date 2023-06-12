@@ -9,6 +9,9 @@ import InteractionTypes from './models/InteractionTypes.js';
 import Messages from './models/Messages.js';
 import MessagesMonitor from './models/MessagesMonitor.js';
 import MessageTypes from './models/MessageTypes.js';
+import Suggestion from './models/Suggestions.js';
+import S3Image from './models/S3Image.js';
+
 import {
     Characters,
     Armors,
@@ -33,6 +36,8 @@ import { Effects,
     SourceReferences, 
     LoreObject,
     UniverseContext,
+    SubdivisionContext,
+    FeatureContext,
 } from './models/games/index.js';
 
 
@@ -70,6 +75,10 @@ const models = {
     RacialAlternatives,
     LoreObject,
     UniverseContext,
+    SubdivisionContext,
+    FeatureContext,
+    Suggestion,
+    S3Image,
 };
 
 Object.values(models).forEach(model => {
@@ -112,4 +121,8 @@ export {
     RacialAlternatives,
     LoreObject,
     UniverseContext,
+    SubdivisionContext,
+    FeatureContext,
+    Suggestion,
+    S3Image,
 }

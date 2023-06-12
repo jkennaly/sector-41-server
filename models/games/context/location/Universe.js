@@ -16,6 +16,14 @@ export const UniverseContext = sequelize.define('UniverseContext', {
     type: DataTypes.TEXT,
     allowNull: true,
   },
+  creatorId: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: {
+      model: 'Users', // name of your model for games
+      key: 'id',
+    },
+  },
   gameId: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -29,10 +37,14 @@ export const UniverseContext = sequelize.define('UniverseContext', {
 });
 
 UniverseContext.associate = function(models) {
-  UniverseContext.belongsTo(models.Games, {
-    foreignKey: 'gameId',
-    as: 'game', 
-  });
+    UniverseContext.belongsTo(models.Games, {
+      foreignKey: 'gameId',
+      as: 'game', 
+    });
+    UniverseContext.belongsTo(models.Users, {
+      foreignKey: 'creatorId',
+      as: 'creator', 
+    });
 };
 
 export default UniverseContext;
