@@ -35,8 +35,8 @@ class S3Image extends Model {
         
         const request = await createRequest(s3, command);
 
-        // Presign the URL for 4 hours
-        const signedUrl = await getSignedUrl(s3, command, { expiresIn: 60 * 60 * 4 });
+        // Presign the URL for 7 days
+        const signedUrl = await getSignedUrl(s3, command, { expiresIn: 60 * 60 * 24 * 7 });
 
         console.log('getDownloadURL signedUrl', signedUrl);
         return signedUrl

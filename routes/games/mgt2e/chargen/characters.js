@@ -2,10 +2,12 @@
 import express from 'express';
 import charController from './charController.js';
 import pdfController from './pdfController.js';
+import ccController from './ccController.js';
 
 const router = express.Router();
 
 
+router.post('/:characterId/cc/', ccController.create);
 
 router.post('/:characterId/pdf/portrait', pdfController.createPortrait);
 router.post('/:characterId/pdf/', pdfController.create);

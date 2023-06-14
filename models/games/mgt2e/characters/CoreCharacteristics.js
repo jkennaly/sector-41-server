@@ -34,7 +34,7 @@ const CoreCharacteristics = sequelize.define('CoreCharacteristics', {
   },
   psionics: {
     type: DataTypes.INTEGER,
-    allowNull: false,
+    allowNull: true,
   },
   ownerId: {
     type: DataTypes.INTEGER,
