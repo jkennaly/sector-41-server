@@ -9,15 +9,14 @@ import { getAccessToken } from './middleware/gt-access-token.js';
 import boot from './boot.js';
 import cookieParser from 'cookie-parser';
 import unless from 'express-unless';
-
 import cors from 'cors'
+import dotenv from 'dotenv';
+dotenv.config();
+
 const corsOptions = {
   origin: [
-      'http://localhost:8181',
-      'https://festigram.app',
-      'http://localhost:3000',
-      'http://localhost:3001',
-      'http://localhost:3002',
+      process.env.CLIENT_DOMAIN,
+      process.env.COLYSEUS_DOMAIN,
   ],
   credentials: true,
   maxAge: 86400

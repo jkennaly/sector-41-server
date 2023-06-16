@@ -16,6 +16,7 @@ import Connections from './Connections.js';
 import MusteringOuts from './MusteringOuts.js';
 import PreCareerTerms from './PreCareerTerms.js';
 import RacialAlternatives from './RacialAlternatives.js';
+import SkillSets from './SkillSets.js';
 
 
 
@@ -37,6 +38,7 @@ export {
     Connections,
     MusteringOuts,
     PreCareerTerms,
-    RacialAlternatives
+    RacialAlternatives,
+    SkillSets,
 
 }

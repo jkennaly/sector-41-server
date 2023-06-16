@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
         character,
     } = req.body;
     const characterId = character && character.id
-    //console.log('suggestion req body', formData, req.body);
+    ////('suggestion req body', formData, req.body);
     const suggestion = await Suggestion.create({
         params: req.body,
         creatorId: user.ftUserId,
@@ -32,7 +32,7 @@ router.post('/', async (req, res) => {
     //console.log('suggestion', suggestion);
     const body = characterId ? await suggestion.getCharacterBody() : await suggestion.getBody() ;
 
-    console.log('suggestion body', JSON.stringify(body));
+    //console.log('suggestion body', JSON.stringify(body));
 
     //send request to gpt-3.5-turbo model api
     const response = await axios.post('https://api.openai.com/v1/chat/completions',
@@ -46,7 +46,7 @@ router.post('/', async (req, res) => {
     )
     //parse response
     const {choices} = response.data;
-    console.log('suggestion response', response.data);
+    //console.log('suggestion response', response.data);
     //save response to db
     await suggestion.update({choices});
     suggestion.save();
@@ -126,7 +126,7 @@ router.post('/portrait', async (req, res) => {
     };
     const s3 = await S3Image.uploadImage(parameters)
     const url = await s3.getDownloadURL();
-    console.log('s3 url', url);
+    //console.log('s3 url', url);
     //send the url to the client
     return res.status(200).json({ url });
     } catch (err) {

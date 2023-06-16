@@ -30,6 +30,7 @@ import {
     MusteringOuts,
     PreCareerTerms,
     RacialAlternatives,
+    SkillSets,
 } from './models/games/mgt2e/characters/index.js';
 import { Effects, 
     Portrait, 
@@ -79,6 +80,7 @@ const models = {
     FeatureContext,
     Suggestion,
     S3Image,
+    SkillSets,
 };
 
 Object.values(models).forEach(model => {
@@ -125,4 +127,5 @@ export {
     FeatureContext,
     Suggestion,
     S3Image,
+    SkillSets,
 }

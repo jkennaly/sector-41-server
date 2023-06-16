@@ -57,7 +57,7 @@ Portrait.prototype.generateSignedUrl = async function() {
   //update the URL in the database
   this.imageUrl = signedUrl;
   await this.save();
-  
+
   return signedUrl;
 }
 
@@ -69,8 +69,6 @@ Portrait.associate = function(models) {
 
 export default Portrait;
 
-
-
 function extractBucketAndKey(s3Url) {
   const url = new URL(s3Url);
   const bucket = url.hostname.split('.')[0];
@@ -78,8 +76,6 @@ function extractBucketAndKey(s3Url) {
 
   return { bucket, key };
 }
-
-
 
 function secondsUntilExpiry(signedS3Url) {
   const url = new URL(signedS3Url);

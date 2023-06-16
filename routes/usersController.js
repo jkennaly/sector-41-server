@@ -13,7 +13,9 @@ const usersController = {
 
   async getAll(req, res) {
     try {
-      const users = await Users.findAll();
+      const users = await Users.findAll({
+        attributes: ['id', 'username', 'picture']
+    });
       res.status(200).json(users);
     } catch (err) {
       console.error(err);
@@ -27,7 +29,8 @@ const usersController = {
       const users = await Users.findAll({
         where: {
           id: ids
-        }
+        },
+        attributes: ['id', 'username', 'picture']
       });
       if (users && users.length > 0) {
         res.status(200).json(users);
@@ -43,7 +46,9 @@ const usersController = {
 
   async getById(req, res) {
     try {
-      const user = await Users.findByPk(req.params.id);
+      const user = await Users.findByPk(req.params.id, {
+        attributes: ['id', 'username', 'picture']
+    });
       if (user) {
         res.status(200).json(user);
       } else {
