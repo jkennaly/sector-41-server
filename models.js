@@ -15,6 +15,7 @@ import S3Image from './models/S3Image.js';
 import {
     Characters,
     Armors,
+    Associates,
     Augmentations,
     CoreCharacteristics,
     Equipment,
@@ -56,6 +57,7 @@ const models = {
     MessageTypes,
     Characters,
     Armors,
+    Associates,
     Augmentations,
     CoreCharacteristics,
     Equipment,
@@ -103,6 +105,7 @@ export {
     MessageTypes,
     Characters,
     Armors,
+    Associates,
     Augmentations,
     CoreCharacteristics,
     Equipment,

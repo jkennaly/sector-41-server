@@ -1,5 +1,6 @@
 import { 
   Characters, 
+  Associates,
   Armors, 
   Augmentations, 
   CoreCharacteristics, 
@@ -9,6 +10,7 @@ import {
   PersonalDataFile, 
   Skills, 
   Weapons } from '../../../../models/games/mgt2e/characters/index.js';
+
 
 
 const charController = {
@@ -24,6 +26,37 @@ const charController = {
         gameId,
       }
       const character = await Characters.create(params);
+      res.status(201).json(character);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Internal server error' });
+    }
+  },
+  async createAssoc(req, res) {
+    try {
+      const characterId = parseInt(req.params.characterId, 10)
+      const user = req.user || { ftUserId: 0 };
+      const ownerId = user.ftUserId;
+      const { body } = req;
+      if(!ownerId) throw new Error('No ownerId provided');
+      if(!characterId) throw new Error('No characterId provided');
+      if(!body) throw new Error('No body provided');
+
+      const { name, origin, association } = body;
+
+
+      const params = {
+        name,
+        origin,
+        ownerId: characterId,
+        association,
+      }
+      const associate = await Associates.create(params);
+      const character = await Characters.findByPk(characterId, {
+        include: {
+          all: true,
+        }
+      });
       res.status(201).json(character);
     } catch (err) {
       console.error(err);

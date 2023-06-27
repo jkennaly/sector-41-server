@@ -246,6 +246,97 @@ Suggestions.prototype.getCharacterBody = async function() {
   return {model, messages: finalizedMessages, max_tokens, temperature }
 };
 
+Suggestions.prototype.getAssociateBody = async function() {
+  if(this.prompt) return this.prompt;
+  const characterId = this.params?.characterId;
+  const termId = this.params?.termId;
+  const formPrompt = this.params?.prompt
+  if(!characterId) throw new Error('No characterId provided');
+  if(!termId) throw new Error('No termId provided');
+  if(!formPrompt) throw new Error('No prompt provided');
+  //get the Context models
+  console.log('getAssociateBody params', this.params);
+  const { Characters, FeatureContext, SubdivisionContext, LifePaths } = sequelize.models;
+  const dbChar = characterId ? await Characters.findOne({ 
+    where: { id: characterId }, 
+    include: { all: true}
+  }) : undefined
+  if(!dbChar) throw new Error('No character found');
+
+  const currentTerm = LifePaths.findOne({ 
+    where: { id: termId },
+    include: { all: true } 
+  });
+
+  
+  //for each context models, get the members with the same gameId
+  const featureContexts = await FeatureContext.findAll({ where: { gameId: this.gameId } });
+  const subdivisionContexts = await SubdivisionContext.findAll({ where: { gameId: this.gameId } });
+
+
+  const homeworld = dbChar?.homeworld;
+  const name = dbChar?.name;
+  const species = dbChar?.species;
+  const title = dbChar?.title;
+  const traits = dbChar?.traits || [];
+  const features = dbChar?.distinguishingFeatures || [];
+  const notes = dbChar?.backgroundNotes || [];
+  const paths = dbChar?.paths || [];
+  const age = dbChar?.age;
+
+
+
+
+  const model = 'gpt-3.5-turbo'
+  const messages = []
+  //@TODO: get the system prompt from the game type
+  //for now, use the Traveller system prompt
+  const systemPrompt = `You are an AI in the Traveller universe. 
+  Your responsibility is to provide dossier information on characters in the universe.
+  These characters are new and have not been created yet.
+  When asked to provide information, we will just reply with an answer that seems reasonable based on what has been given so far.
+  You will be given some biographical information about a character, and you will need to provide additional requested information on that character.`;
+  messages.push({role: 'system', content: systemPrompt});
+  const userBasicsPrompt = `Describe ${name}, a ${age} year old ${species} from ${homeworld}.`;
+  const assitantBasicsResponse =  `Sure! Here is some information about ${name}: ${title ? `${title} ` : ''}${age} year old ${species} from ${homeworld}.
+  ${traits.length ? `Traits: ${traits.join(', ')}` : ''}
+  ${features.length ? `Distinguishing Features: ${features.join(', ')}` : ''}
+  ${notes.length ? `Background Notes: ${notes.join(', ')}` : ''}
+  `;
+  messages.push({role: 'user', content: userBasicsPrompt});
+  messages.push({role: 'assistant', content: assitantBasicsResponse});
+  //see if there is a subdivision with a scale of world (case-insesitive) and a name that matches formHomeworld
+  const homeworldSubdivision = homeworld ? subdivisionContexts.filter(s => s && s.name).find(context => context.name.toLowerCase() === homeworld.toLowerCase() && context.scale.toLowerCase() === 'world') : {};
+  const homeworldFeatures = featureContexts.filter(featureContext => featureContext.subdivisionId === homeworldSubdivision?.id);
+  //combine homeWorldSubdivision.description and homeworldFeatures.descriptions
+  const homeworldDescription = homeworldSubdivision?.description || '';
+  const homeworldFeaturesDescription = homeworldFeatures.map(feature => `${feature.type}: ${feature.name}\n ${feature.description}`).join('\n');
+  const homeworldDescriptionAndFeatures = `${homeworldDescription}\n${homeworldFeaturesDescription}`;
+  const homeworldPrompt = `Describe ${name}'s ${homeworld}`
+  messages.push({role: 'user', content: homeworldPrompt});
+  messages.push({role: 'assistant', content: homeworldDescriptionAndFeatures});
+
+
+  
+  const userRequestPrompt = formPrompt;
+  
+  let max_tokens = RESEVERED_TOKENS;
+  messages.push({role: 'user', content: userRequestPrompt});
+  const finalizedMessages = finalizeCharChain(messages);
+
+
+
+
+  // if(suggestionForSubdivision) {
+  //     max_tokens = 128;
+  // }
+  // if(suggestionForWorld) {
+  //     max_tokens = 512;
+  // }
+  this.prompt = userRequestPrompt
+  return {model, messages: finalizedMessages, max_tokens }
+};
+
 Suggestions.prototype.getCharacterPortraitBody = async function() {
   if(this.prompt) return this.prompt;
   //get the Context models

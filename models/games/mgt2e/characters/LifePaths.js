@@ -12,13 +12,17 @@ const LifePaths = sequelize.define('LifePaths', {
     type: DataTypes.STRING,
     allowNull: true,
   },
-  notes: {
-    type: DataTypes.STRING,
-    allowNull: true,
-  },
   finalAge: {
     type: DataTypes.INTEGER,
     allowNull: false,
+  },
+  term: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  },
+  completed: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
   },
   ownerId: {
     type: DataTypes.INTEGER,

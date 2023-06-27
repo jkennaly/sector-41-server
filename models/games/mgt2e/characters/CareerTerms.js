@@ -32,6 +32,10 @@ const CareerTerms = sequelize.define('CareerTerms', {
     type: DataTypes.BOOLEAN,
     allowNull: false,
   },
+  completed: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true,
+  },
   ownerId: {
     type: DataTypes.INTEGER,
     allowNull: false,

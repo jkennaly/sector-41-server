@@ -8,6 +8,7 @@ import LifePaths from './LifePaths.js';
 import PersonalDataFile from './PersonalDataFile.js';
 import Skills from './Skills.js';
 import Weapons from './Weapons.js';
+import Associates from './Associates.js';
 
 import ArmorOptions from './ArmorOptions.js';
 import EquipmentTraits from './EquipmentTraits.js';
@@ -24,6 +25,7 @@ import SkillSets from './SkillSets.js';
 export {
     Characters,
     Armors,
+    Associates,
     Augmentations,
     CoreCharacteristics,
     Equipment,

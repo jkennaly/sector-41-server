@@ -70,10 +70,11 @@ Characters.associate = function(models) {
   Characters.belongsTo(models.CoreCharacteristics, { as: 'coreCharacteristics', foreignKey: 'coreCharacteristicsId' });
   Characters.hasMany(models.Equipment, { as: 'equipment', foreignKey: 'characterId' });
   Characters.belongsTo(models.Finances, { as: 'finances', foreignKey: 'financesId' });
-  Characters.hasMany(models.LifePaths, { as: 'lifePaths', foreignKey: 'characterId' });
+  Characters.hasMany(models.LifePaths, { as: 'lifePaths', foreignKey: 'ownerId' });
   Characters.belongsTo(models.PersonalDataFile, { as: 'personalDataFile', foreignKey: 'personalDataFileId' });
   Characters.hasMany(models.SkillSets, { as: 'skills', foreignKey: 'characterId' });
   Characters.hasMany(models.Weapons, { as: 'weapons', foreignKey: 'characterId' });
+  Characters.hasMany(models.Associates, { as: 'associates', foreignKey: 'ownerId' });
 };
 
 export default Characters;
