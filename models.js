@@ -13,6 +13,12 @@ import Suggestion from './models/Suggestions.js';
 import S3Image from './models/S3Image.js';
 
 import {
+    Faction,
+    FactionInstance,
+    FactionType,
+} from './models/games/mgt2e/campaign/index.js';
+
+import {
     Characters,
     Armors,
     Associates,
@@ -83,6 +89,9 @@ const models = {
     Suggestion,
     S3Image,
     SkillSets,
+    Faction,
+    FactionInstance,
+    FactionType,
 };
 
 Object.values(models).forEach(model => {
@@ -131,4 +140,7 @@ export {
     Suggestion,
     S3Image,
     SkillSets,
+    Faction,
+    FactionInstance,
+    FactionType,
 }

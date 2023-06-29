@@ -29,6 +29,14 @@ export const SubdivisionContext = sequelize.define('SubdivisionContext', {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  superLocation: {
+    type: DataTypes.STRING,
+    allowNull: true,
+  },
+  emptyLocations: {
+    type: DataTypes.JSON,
+    allowNull: true,
+  },
   creatorId: {
     type: DataTypes.INTEGER,
     allowNull: false,
